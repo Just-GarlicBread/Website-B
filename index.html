@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de" data-status="loading" data-weather="wolken" data-daytime="tag">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Cloudy – Variante B</title>
+<meta name="description" content="Cloudy – das Wetter in Hamburg, live. Studienprojekt der Kunstschule Wandsbek, keine offizielle Seite.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@500;700;800&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="bar">
+    <span class="logo">Cloudy</span>
+    <span class="caps mid">Hamburg · Live-Wetter · 53,55° N 9,99° O</span>
+    <span class="caps"><span class="dot"></span><span data-w="time">…</span> Uhr</span>
+  </header>
+
+  <div class="strip" role="img" aria-label="Wetterbild, wechselt mit dem aktuellen Wetter"><span class="caps">Jetzt: <span data-w="state">…</span></span></div>
+
+  <section class="hero">
+    <h1 class="temp" aria-label="Temperatur in Hamburg"><span data-w="temp" data-fallback="–">…</span>°</h1>
+    <div class="hero-side">
+      <div class="script" aria-hidden="true">heute in Hamburg</div>
+      <p class="state" data-w="state" data-fallback="Keine Daten">Lädt</p>
+      <div class="status loading caps" role="status">Wetterdaten werden geladen …</div>
+      <div class="status error" role="alert">
+        <p>Wetterdaten gerade nicht erreichbar.</p>
+        <button type="button" data-retry>Neu laden</button>
+      </div>
+      <div class="meta caps">
+        <span class="tag inv" data-w="cond" data-fallback="–">…</span>
+        <span class="tag"><span data-w="daytime">…</span></span>
+        <span class="tag">Stand <span data-w="time">…</span></span>
+        <span class="tag forced">Testmodus</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div>
+      <span>Hamburg <span data-w="temp1">…</span>°</span><i>▶▶</i><span>Gefühlt <span data-w="feels">…</span>°</span><i>▶▶</i><span>Wind <span data-w="wind">…</span> km/h <span data-w="winddir"></span></span><i>▶▶</i><span>Feuchte <span data-w="humidity">…</span> %</span><i>▶▶</i><span>Wolken <span data-w="cloud">…</span> %</span><i>▶▶</i>
+      <span>Hamburg <span data-w="temp1">…</span>°</span><i>▶▶</i><span>Gefühlt <span data-w="feels">…</span>°</span><i>▶▶</i><span>Wind <span data-w="wind">…</span> km/h <span data-w="winddir"></span></span><i>▶▶</i><span>Feuchte <span data-w="humidity">…</span> %</span><i>▶▶</i><span>Wolken <span data-w="cloud">…</span> %</span><i>▶▶</i>
+    </div>
+  </div>
+
+  <section class="advice">
+    <h2 data-w="advice" data-fallback="Hamburg. Live.">Einen Moment.</h2>
+    <p data-w="advice-text" data-fallback="Die Live-Werte sind gerade nicht erreichbar. Beim nächsten Öffnen der Seite wird es erneut versucht.">Die aktuellen Werte werden abgerufen.</p>
+  </section>
+
+  <section class="grid" aria-label="Aktuelle Messwerte">
+    <div class="cell c-wind">
+      <span class="caps n">01</span>
+      <div class="caps">Wind aus <span data-w="winddir">…</span> <span class="tag focus-tag">Wichtig jetzt</span></div>
+      <div class="compass" aria-hidden="true"><b class="N">N</b><b class="O">O</b><b class="S">S</b><b class="W">W</b><span class="needle"></span></div>
+      <div class="wind-row"><div class="val"><span data-w="wind">…</span><small>km/h</small></div><span class="caps">Pfeil = Zugrichtung</span></div>
+    </div>
+    <div class="cell c-feels">
+      <span class="caps n">02</span>
+      <div class="caps">Gefühlt <span class="tag focus-tag">Wichtig jetzt</span></div>
+      <div class="val"><span data-w="feels">…</span>°</div>
+      <div class="caps">Tief <span data-w="tmin">…</span>° / Hoch <span data-w="tmax">…</span>°</div>
+    </div>
+    <div class="cell c-precip">
+      <span class="caps n">03</span>
+      <div class="caps">Niederschlag <span class="tag focus-tag">Wichtig jetzt</span></div>
+      <div class="val"><span data-w="precip">…</span><small>mm</small></div>
+      <div class="caps">Letzte 15 Minuten</div>
+    </div>
+    <div class="cell c-hum">
+      <span class="hum-fill" aria-hidden="true"></span>
+      <span class="caps n">04</span>
+      <div class="caps">Luftfeuchte <span class="tag focus-tag">Wichtig jetzt</span></div>
+      <div class="val"><span data-w="humidity">…</span><small>%</small></div>
+    </div>
+    <div class="cell c-photo" role="img" aria-label="Stadtbild Hamburg-Stimmung"><span class="caps">Bild wechselt bei Nacht</span></div>
+    <div class="cell c-sun">
+      <span class="caps n">05</span>
+      <div class="caps">Licht · <span data-w="daylength">…</span></div>
+      <div class="sun-times caps">
+        <span>Auf<b data-w="sunrise">…</b></span>
+        <span>Unter<b data-w="sunset">…</b></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="hours-sec" aria-label="Vorhersage">
+    <div class="hours-head">
+      <h2>Nächste 6 Stunden</h2>
+      <span class="caps">Balken = Temperatur · Braun = Regen / Schnee</span>
+    </div>
+    <p class="empty">Vorhersage gerade nicht verfügbar.</p>
+    <ul class="bars" data-hours></ul>
+    <template id="hour-tpl">
+      <li><span class="h-temp" data-h="temp"></span><span class="caps" data-h="time"></span><span class="caps" data-h="cond"></span><span class="caps">Regen <span data-h="pop"></span></span></li>
+    </template>
+  </section>
+
+  <footer>
+    <div>
+      <p><strong>Studienprojekt der Kunstschule Wandsbek, keine offizielle Seite.</strong></p>
+      <p>Variante B</p>
+    </div>
+    <div>
+      <p>Wetterdaten: <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a>, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a> – live bei jedem Aufruf.</p>
+      <p>Fotos: gemeinfrei (CC0 / Public Domain) · <a href="credits.html">Bildquellen</a></p>
+    </div>
+  </footer>
+</div>
+
+<script src="cloudy.js"></script>
+</body>
+</html>

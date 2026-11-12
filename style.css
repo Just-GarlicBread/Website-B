@@ -1,0 +1,185 @@
+/* Cloudy – Variante B (modern / brutal) */
+
+:root {
+  --black: #061417;
+  --navy: #012C3C;
+  --teal: #285669;
+  --taupe: #928477;
+  --bone: #C6BFBB;
+  --bg: var(--bone);
+  --fg: var(--black);
+  --b: 2px solid var(--fg);
+  --cond: "Anton", "Impact", "Arial Narrow Bold", sans-serif;
+  --grot: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --script: "Mrs Saint Delafield", "Brush Script MT", cursive;
+  --img-main: url(img/b-cloudy-shore.jpg);
+  --img-side: url(img/b-rain-platform.jpg);
+}
+/* Kür: Nacht → alles kippt ins Schwarze */
+:root[data-daytime="nacht"] { --bg: var(--black); --fg: var(--bone); --img-side: url(img/b-night-bridge.jpg); }
+/* Kür: Bild je Wetterlage */
+:root[data-weather="klar"]   { --img-main: url(img/b-clear-cranes.jpg); }
+:root[data-weather="nebel"]  { --img-main: url(img/b-fog-jetty.jpg); }
+:root[data-weather="regen"]  { --img-main: url(img/b-rain-window.jpg); }
+:root[data-weather="schnee"] { --img-main: url(img/b-snow-ice.jpg); }
+:root[data-daytime="nacht"][data-weather="klar"],
+:root[data-daytime="nacht"][data-weather="wolken"] { --img-main: url(img/b-night-street.jpg); }
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 500 15px/1.4 var(--grot);
+  overflow-x: hidden;
+  transition: background-color .5s, color .5s;
+}
+a { color: inherit; }
+.caps { text-transform: uppercase; font-size: 12px; letter-spacing: .02em; }
+.wrap { max-width: 1360px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Kopf ---------- */
+.bar { display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; padding: 16px 0; border-bottom: 4px solid var(--fg); }
+.logo { font: 400 32px/1 var(--cond); text-transform: uppercase; }
+.bar .mid { text-align: center; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); margin-right: 8px; }
+:root[data-status="ok"] .dot { animation: blink 1.6s steps(2) infinite; }
+:root[data-status="error"] .dot { background: var(--taupe); }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- Hero: Temperatur als Bildmaske ---------- */
+.hero { display: grid; grid-template-columns: auto 1fr; gap: 0 40px; align-items: end; padding: 12px 0 24px; border-bottom: var(--b); }
+.temp {
+  margin: 0;
+  font: 400 clamp(210px, 34vw, 500px)/.78 var(--cond);
+  letter-spacing: -.02em;
+  padding-top: .06em;
+}
+:root[data-daytime="tag"] .temp { color: var(--black); }
+/* Schmales Kopfbild, wechselt mit dem Wetter */
+.strip {
+  position: relative;
+  height: clamp(120px, 15vw, 190px);
+  margin: 0 -24px;
+  background: var(--teal) var(--img-main) center 55% / cover;
+  filter: grayscale(.2) contrast(1.08);
+  border-bottom: 4px solid var(--fg);
+}
+.strip > span {
+  position: absolute; left: 24px; bottom: 12px;
+  background: var(--black); color: var(--bone); padding: 5px 10px;
+}
+.hero-side { padding-bottom: 18px; display: flex; flex-direction: column; gap: 18px; }
+.state { font: 800 clamp(48px, 7vw, 108px)/.86 var(--grot); letter-spacing: -.05em; text-transform: uppercase; margin: 0; }
+.script { font: 400 clamp(46px, 5vw, 76px)/1 var(--script); color: var(--teal); transform: rotate(-7deg); margin: -6px 0 6px 10px; }
+:root[data-daytime="nacht"] .script { color: var(--taupe); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { border: var(--b); border-radius: 999px; padding: 6px 14px; white-space: nowrap; }
+.tag.inv { background: var(--fg); color: var(--bg); }
+.forced { display: none; }
+:root[data-forced="ja"] .forced { display: inline-block; }
+.status { display: none; border: var(--b); padding: 14px 16px; max-width: 420px; }
+:root[data-status="loading"] .status.loading, :root[data-status="error"] .status.error { display: block; }
+.status.error p { margin: 0 0 10px; font-weight: 800; text-transform: uppercase; }
+.status button { font: inherit; background: var(--fg); color: var(--bg); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+:root[data-status="loading"] [data-w] { opacity: .4; }
+
+/* ---------- Laufband ---------- */
+.marquee { background: var(--fg); color: var(--bg); overflow: hidden; white-space: nowrap; margin: 0 -24px; }
+.marquee div { display: inline-flex; animation: run 26s linear infinite; padding: 12px 0; font: 400 26px/1 var(--cond); text-transform: uppercase; }
+.marquee div > span { padding-right: 40px; }
+.marquee i { font-style: normal; color: var(--teal); padding-right: 40px; }
+:root[data-daytime="nacht"] .marquee i { color: var(--taupe); }
+@keyframes run { to { transform: translateX(-50%); } }
+
+/* ---------- Raster ---------- */
+.advice { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 48px 0 28px; align-items: end; }
+.advice h2 { margin: 0; font: 800 clamp(36px, 5vw, 72px)/.9 var(--grot); letter-spacing: -.05em; text-transform: uppercase; }
+.advice p { margin: 0; max-width: 46ch; justify-self: end; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "wind wind feels hum" "wind wind precip hum" "photo photo photo sun";
+  border-top: var(--b); border-left: var(--b);
+}
+.cell { position: relative; border-right: var(--b); border-bottom: var(--b); padding: 18px 20px 20px; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between; transition: background-color .4s, color .4s; }
+.cell .val { font: 400 clamp(64px, 7vw, 112px)/.85 var(--cond); }
+.cell .val small { font: 800 16px var(--grot); margin-left: 6px; }
+.cell .n { position: absolute; top: 16px; right: 18px; }
+.c-wind { grid-area: wind; }
+.c-feels { grid-area: feels; }
+.c-precip { grid-area: precip; }
+.c-hum { grid-area: hum; overflow: hidden; }
+.c-photo { grid-area: photo; background: var(--img-side) center / cover; min-height: 300px; color: #C6BFBB; justify-content: flex-end; }
+.c-photo span { background: var(--black); align-self: flex-start; padding: 6px 10px; }
+.c-sun { grid-area: sun; }
+/* Kür: Feld, auf das es jetzt ankommt, wird invertiert */
+:root[data-focus="temp"] .c-feels,
+:root[data-focus="wind"] .c-wind,
+:root[data-focus="precip"] .c-precip,
+:root[data-focus="humidity"] .c-hum { background: var(--teal); color: var(--bone); }
+.focus-tag { display: none; }
+:root[data-focus="temp"] .c-feels .focus-tag,
+:root[data-focus="wind"] .c-wind .focus-tag,
+:root[data-focus="precip"] .c-precip .focus-tag,
+:root[data-focus="humidity"] .c-hum .focus-tag { display: inline-block; }
+
+.compass { position: relative; width: min(100%, 320px); aspect-ratio: 1; margin: 18px auto; border: var(--b); border-color: currentColor; border-radius: 50%; }
+.compass b { position: absolute; font: 400 22px/1 var(--cond); }
+.compass .N { top: 10px; left: 50%; transform: translateX(-50%); }
+.compass .S { bottom: 10px; left: 50%; transform: translateX(-50%); }
+.compass .O { right: 12px; top: 50%; transform: translateY(-50%); }
+.compass .W { left: 12px; top: 50%; transform: translateY(-50%); }
+/* Pfeil zeigt, wohin der Wind weht (Richtung + 180°) */
+.needle { position: absolute; inset: 18%; transform: rotate(calc(var(--wind-deg, 0deg) + 180deg)); transition: transform 1.2s cubic-bezier(.3,1.4,.5,1); }
+.needle::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 50%; width: 4px; margin-left: -2px; background: currentColor; }
+.needle::after { content: ""; position: absolute; left: 50%; top: -4px; margin-left: -13px; border: 13px solid transparent; border-bottom: 22px solid currentColor; border-top: 0; }
+:root[data-status="error"] .needle { display: none; }
+.wind-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+
+.hum-fill { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--hum, 0) * 100%); background: repeating-linear-gradient(-45deg, transparent 0 7px, rgba(146, 132, 119, .55) 7px 9px); transition: height 1.2s; }
+.c-hum > *:not(.hum-fill):not(.n) { position: relative; }
+
+.sun-times { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sun-times b { display: block; font: 400 48px/1 var(--cond); }
+
+/* ---------- Stunden als Balken ---------- */
+.hours-sec { padding: 56px 0 64px; }
+.hours-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: var(--b); padding-bottom: 12px; flex-wrap: wrap; }
+.hours-head h2 { margin: 0; font: 400 clamp(40px, 5vw, 64px)/1 var(--cond); text-transform: uppercase; }
+.bars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); height: 340px; }
+.bars li { position: relative; display: flex; flex-direction: column; justify-content: flex-end; border-right: var(--b); padding: 0 12px 12px; }
+.bars li:last-child { border-right: 0; }
+.bars li::before { content: ""; position: absolute; left: 12px; right: 12px; bottom: 0; height: calc(var(--bar, .5) * 78%); background: var(--fg); opacity: .12; transition: height 1s; }
+.bars li[data-weather="regen"]::before, .bars li[data-weather="schnee"]::before { background: var(--taupe); opacity: .7; }
+.bars li > * { position: relative; }
+.bars .h-temp { font: 400 clamp(44px, 5vw, 72px)/1 var(--cond); }
+.hours-sec .empty { display: none; padding: 24px 0; font-weight: 800; text-transform: uppercase; }
+:root[data-status="error"] .hours-sec .empty, :root[data-status="loading"] .hours-sec .empty { display: block; }
+:root[data-status="error"] .bars, :root[data-status="loading"] .bars { height: 0; }
+
+/* ---------- Fuß ---------- */
+footer { border-top: 4px solid var(--fg); padding: 20px 0 32px; display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; font-size: 13px; }
+footer p { margin: 0 0 4px; }
+footer strong { text-transform: uppercase; font-weight: 800; }
+
+@media (max-width: 900px) {
+  .bar { grid-template-columns: 1fr auto; }
+  .bar .mid { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .temp { font-size: 64vw; }
+  .advice { grid-template-columns: 1fr; }
+  .advice p { justify-self: start; }
+  .grid { grid-template-columns: 1fr 1fr; grid-template-areas: "wind wind" "feels hum" "precip hum" "sun sun" "photo photo"; }
+  .bars { grid-template-columns: repeat(3, 1fr); height: auto; }
+  .bars li { min-height: 200px; border-bottom: var(--b); }
+  .bars li:nth-child(3n) { border-right: 0; }
+}
+@media (max-width: 520px) {
+  .wrap { padding: 0 16px; }
+  .marquee, .strip { margin: 0 -16px; }
+  .strip > span { left: 16px; }
+  .cell { padding: 16px; min-height: 180px; }
+  .bars { grid-template-columns: 1fr 1fr; }
+  .bars li:nth-child(3n) { border-right: var(--b); }
+  .bars li:nth-child(2n) { border-right: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
