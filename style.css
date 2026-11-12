@@ -12,18 +12,10 @@
   --cond: "Anton", "Impact", "Arial Narrow Bold", sans-serif;
   --grot: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --script: "Mrs Saint Delafield", "Brush Script MT", cursive;
-  --img-main: url(img/b-cloudy-shore.jpg);
   --img-side: url(img/b-rain-platform.jpg);
 }
 /* Kür: Nacht → alles kippt ins Schwarze */
 :root[data-daytime="nacht"] { --bg: var(--black); --fg: var(--bone); --img-side: url(img/b-night-bridge.jpg); }
-/* Kür: Bild je Wetterlage */
-:root[data-weather="klar"]   { --img-main: url(img/b-clear-cranes.jpg); }
-:root[data-weather="nebel"]  { --img-main: url(img/b-fog-jetty.jpg); }
-:root[data-weather="regen"]  { --img-main: url(img/b-rain-window.jpg); }
-:root[data-weather="schnee"] { --img-main: url(img/b-snow-ice.jpg); }
-:root[data-daytime="nacht"][data-weather="klar"],
-:root[data-daytime="nacht"][data-weather="wolken"] { --img-main: url(img/b-night-street.jpg); }
 
 * { box-sizing: border-box; }
 body {
@@ -54,19 +46,6 @@ a { color: inherit; }
   padding-top: .06em;
 }
 :root[data-daytime="tag"] .temp { color: var(--black); }
-/* Schmales Kopfbild, wechselt mit dem Wetter */
-.strip {
-  position: relative;
-  height: clamp(120px, 15vw, 190px);
-  margin: 0 -24px;
-  background: var(--teal) var(--img-main) center 55% / cover;
-  filter: grayscale(.2) contrast(1.08);
-  border-bottom: 4px solid var(--fg);
-}
-.strip > span {
-  position: absolute; left: 24px; bottom: 12px;
-  background: var(--black); color: var(--bone); padding: 5px 10px;
-}
 .hero-side { padding-bottom: 18px; display: flex; flex-direction: column; gap: 18px; }
 .state { font: 800 clamp(48px, 7vw, 108px)/.86 var(--grot); letter-spacing: -.05em; text-transform: uppercase; margin: 0; }
 .script { font: 400 clamp(46px, 5vw, 76px)/1 var(--script); color: var(--teal); transform: rotate(-7deg); margin: -6px 0 6px 10px; }
@@ -146,9 +125,9 @@ a { color: inherit; }
 .hours-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: var(--b); padding-bottom: 12px; flex-wrap: wrap; }
 .hours-head h2 { margin: 0; font: 400 clamp(40px, 5vw, 64px)/1 var(--cond); text-transform: uppercase; }
 .bars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); height: 340px; }
-.bars li { position: relative; display: flex; flex-direction: column; justify-content: flex-end; border-right: var(--b); padding: 0 12px 12px; }
+.bars li { position: relative; display: flex; flex-direction: column; justify-content: flex-end; border-right: var(--b); padding: 0 14px 14px 30px; }
 .bars li:last-child { border-right: 0; }
-.bars li::before { content: ""; position: absolute; left: 12px; right: 12px; bottom: 0; height: calc(var(--bar, .5) * 78%); background: var(--fg); opacity: .12; transition: height 1s; }
+.bars li::before { content: ""; position: absolute; left: 14px; right: 14px; bottom: 0; height: calc(var(--bar, .5) * 78%); background: var(--fg); opacity: .12; transition: height 1s; }
 .bars li[data-weather="regen"]::before, .bars li[data-weather="schnee"]::before { background: var(--taupe); opacity: .7; }
 .bars li > * { position: relative; }
 .bars .h-temp { font: 400 clamp(44px, 5vw, 72px)/1 var(--cond); }
@@ -175,8 +154,7 @@ footer strong { text-transform: uppercase; font-weight: 800; }
 }
 @media (max-width: 520px) {
   .wrap { padding: 0 16px; }
-  .marquee, .strip { margin: 0 -16px; }
-  .strip > span { left: 16px; }
+  .marquee { margin: 0 -16px; }
   .cell { padding: 16px; min-height: 180px; }
   .bars { grid-template-columns: 1fr 1fr; }
   .bars li:nth-child(3n) { border-right: var(--b); }

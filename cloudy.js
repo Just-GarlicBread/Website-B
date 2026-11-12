@@ -234,6 +234,15 @@
     if (e.target.closest && e.target.closest("[data-retry]")) load();
   });
 
+  // Echte Uhrzeit in Hamburg (unabhängig von den Messdaten, die nur alle 15 Minuten neu sind)
+  function tick() {
+    var t = new Date().toLocaleTimeString("de-DE", { timeZone: "Europe/Berlin", hour: "2-digit", minute: "2-digit" });
+    var els = document.querySelectorAll("[data-clock]");
+    for (var i = 0; i < els.length; i++) els[i].textContent = t;
+  }
+  tick();
+  setInterval(tick, 15000);
+
   window.Cloudy = { API_URL: API_URL, reload: load };
   load();
 })();
