@@ -38,12 +38,12 @@ a { color: inherit; }
 @keyframes blink { 50% { opacity: 0; } }
 
 /* ---------- Hero: Temperatur als Bildmaske ---------- */
-.hero { display: grid; grid-template-columns: auto 1fr; gap: 0 40px; align-items: end; padding: 12px 0 24px; border-bottom: var(--b); }
+.hero { display: grid; grid-template-columns: auto 1fr; gap: 0 72px; align-items: end; padding: 48px 0 56px; }
 .temp {
   margin: 0;
-  font: 400 clamp(210px, 34vw, 500px)/.78 var(--cond);
+  font: 400 clamp(200px, 30vw, 440px)/.86 var(--cond);
   letter-spacing: -.02em;
-  padding-top: .06em;
+  padding: 0 0 0 8px;
 }
 :root[data-daytime="tag"] .temp { color: var(--black); }
 .hero-side { padding-bottom: 18px; display: flex; flex-direction: column; gap: 18px; }
@@ -62,7 +62,7 @@ a { color: inherit; }
 :root[data-status="loading"] [data-w] { opacity: .4; }
 
 /* ---------- Laufband ---------- */
-.marquee { background: var(--fg); color: var(--bg); overflow: hidden; white-space: nowrap; margin: 0 -24px; }
+.marquee { background: var(--fg); color: var(--bg); overflow: hidden; white-space: nowrap; margin: 0; }
 .marquee div { display: inline-flex; animation: run 26s linear infinite; padding: 12px 0; font: 400 26px/1 var(--cond); text-transform: uppercase; }
 .marquee div > span { padding-right: 40px; }
 .marquee i { font-style: normal; color: var(--teal); padding-right: 40px; }
@@ -143,8 +143,8 @@ footer strong { text-transform: uppercase; font-weight: 800; }
 @media (max-width: 900px) {
   .bar { grid-template-columns: 1fr auto; }
   .bar .mid { display: none; }
-  .hero { grid-template-columns: 1fr; }
-  .temp { font-size: 64vw; }
+  .hero { grid-template-columns: 1fr; padding: 32px 0 40px; gap: 24px; }
+  .temp { font-size: 58vw; }
   .advice { grid-template-columns: 1fr; }
   .advice p { justify-self: start; }
   .grid { grid-template-columns: 1fr 1fr; grid-template-areas: "wind wind" "feels hum" "precip hum" "sun sun" "photo photo"; }
@@ -154,7 +154,7 @@ footer strong { text-transform: uppercase; font-weight: 800; }
 }
 @media (max-width: 520px) {
   .wrap { padding: 0 16px; }
-  .marquee { margin: 0 -16px; }
+  .marquee { margin: 0; }
   .cell { padding: 16px; min-height: 180px; }
   .bars { grid-template-columns: 1fr 1fr; }
   .bars li:nth-child(3n) { border-right: var(--b); }
